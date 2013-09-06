@@ -52,5 +52,11 @@ public class User implements Serializable {
 	public void setUser_rights(int user_rights) {
 		this.user_rights = user_rights;
 	}
+	@Override
+	public String toString() {
+		return "User [user id=" + user_id + ", username=" + username + "]";
+	}
+	
+	
    
 }

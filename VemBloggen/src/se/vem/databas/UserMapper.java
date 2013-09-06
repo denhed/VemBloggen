@@ -64,6 +64,6 @@ public class UserMapper {
 		
 		return allUsers;
 	}
-	
+
 }
 

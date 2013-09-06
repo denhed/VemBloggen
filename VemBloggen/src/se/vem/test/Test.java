@@ -15,7 +15,9 @@ public class Test {
 		userMapper.registrera(user);
 		
 		List<User> users = userMapper.hämtaAllaPersoner();
+		int i = 1;
 		for (User listUser : users){
+			System.out.print(i++ + " ");
 			System.out.println(listUser);
 		}
 		
