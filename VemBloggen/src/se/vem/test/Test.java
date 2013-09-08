@@ -12,9 +12,9 @@ public class Test {
 		User user = new User();
 		user.setUsername("Robin");
 		user.setPassword("hemligt");
-		userMapper.registrera(user);
+		userMapper.register(user);
 		
-		List<User> users = userMapper.hämtaAllaPersoner();
+		List<User> users = userMapper.getAllUsers();
 		int i = 1;
 		for (User listUser : users){
 			System.out.print(i++ + " ");

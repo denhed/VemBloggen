@@ -26,7 +26,7 @@ public class UserMapper {
 		return userMapper;
 	}
 	
-	public User registrera(User user) {
+	public User register(User user) {
 		EntityManager em = connection.getEntityManager();
 		try {
 			em.getTransaction().begin();
@@ -44,8 +44,10 @@ public class UserMapper {
 		return user;
 		
 	}
+	
+	
 
-	public List<User> hämtaAllaPersoner() {
+	public List<User> getAllUsers() {
 		EntityManager em = connection.getEntityManager();
 		List<User> allUsers = new ArrayList<User>();
 		
