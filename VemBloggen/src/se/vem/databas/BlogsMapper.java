@@ -58,9 +58,13 @@ public class BlogsMapper {
 		
 		try {
 			
-			TypedQuery<Blogs> blogQuery = em.createQuery("SELECT blogs FROM Blogs blogs WHERE Blogs.blog_id = :blogId", Blogs.class); 
+			/*TypedQuery<Blogs> blogQuery = em.createQuery("SELECT blogs FROM Blogs blogs WHERE Blogs.blog_id = :blogId", Blogs.class); 
 			blogQuery.setParameter("blogId", id); //sätter parameter (namn på parametern i queryn, värdet som skickas in).
 			blog  = blogQuery.getSingleResult(); // vi tar emot ett objekt.
+			
+			*Ändrade till em.find()
+			*/
+			blog = em.find(Blogs.class, id);
 			em.getTransaction();
 		} finally {
 			if(em.getTransaction().isActive()) {
