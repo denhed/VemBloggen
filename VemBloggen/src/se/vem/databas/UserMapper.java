@@ -44,8 +44,7 @@ public class UserMapper {
 		return user;
 		
 	}
-
-	public List<User> listUsers() {
+	public List<User> getAllUsers() {
 		EntityManager em = connection.getEntityManager();
 		List<User> allUsers = new ArrayList<User>();
 		

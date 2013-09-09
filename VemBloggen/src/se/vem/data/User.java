@@ -19,6 +19,7 @@ public class User implements Serializable {
 	private String password;
 	private int user_rights;
 	
+	
 	private static final long serialVersionUID = 1L;
 
 	public User() {
@@ -54,7 +55,7 @@ public class User implements Serializable {
 	}
 	@Override
 	public String toString() {
-		return "User [user id=" + user_id + ", username=" + username + "]";
+		return "User [user id=" + user_id + ", username = " + username + "]";
 	}
 	
 	

@@ -25,8 +25,7 @@ public class Test {
 		user.setUsername("Robin");
 		user.setPassword("hemligt");
 		userMapper.register(user);
-		
-		List<User> users = userMapper.listUsers();
+		List<User> users = userMapper.getAllUsers();
 		int i = 1;
 		for (User listUser : users){
 			System.out.print(i++ + " ");
