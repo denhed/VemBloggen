@@ -75,23 +75,24 @@ public class BlogsMapper {
 	 * Tar emot ett blog objekt i parameterlistan och updaterar databasen(Blogs.class).
 	 * @return retunerar det Blogs objekt.
 	 */
-	public Blogs editBlog(Blogs blog){
+	public  Blogs editBlog(long blog_id, String title){
 		EntityManager em = connection.getEntityManager();
-		
-		em.getTransaction().begin();
+
+				
+		Blogs tempBlog = em.find(Blogs.class, blog_id);
 		try {
+			em.getTransaction().begin();
+			tempBlog.setTitle(title);
+			em.getTransaction().commit();
 			
-			TypedQuery<Blogs> blogQuery = em.createQuery("UPDATE Blogs blogs SET blogs =:id  "
-					+ "WHERE blogs.blog_id=:blogsId", Blogs.class); 
-			blog  = blogQuery.getSingleResult(); // vi tar emot ett objekt.
-			em.getTransaction();
+					
 		} finally {
 			if(em.getTransaction().isActive()) {
 				em.getTransaction().rollback();
 			}
 			em.close();
 		}
-		return blog;
+		return tempBlog;
 	}
 	
 	/**
