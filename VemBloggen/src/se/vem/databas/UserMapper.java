@@ -17,7 +17,7 @@ public class UserMapper {
 	private static Logger logg = null;
 	
 	private UserMapper() {
-		logg = Logger.getLogger("se.vemprojekt.databas");
+		logg = Logger.getLogger(UserMapper.class.getCanonicalName());
 		connection = DatabaseConnection.getInstance();
 		logg.info("Singeltobject created");
 	}

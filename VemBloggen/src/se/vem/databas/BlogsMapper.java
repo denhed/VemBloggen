@@ -17,7 +17,7 @@ public class BlogsMapper {
 	private static Logger logg = null;
 	
 	private BlogsMapper() {
-		logg = Logger.getLogger("se.vemprojekt.databas");
+		logg = Logger.getLogger(BlogsMapper.class.getCanonicalName());
 		connection = DatabaseConnection.getInstance();
 		logg.info("Singeltobject created");
 	}
