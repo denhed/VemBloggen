@@ -12,7 +12,7 @@ public class Test {
 	public static void main(String[] args) {
 		addUser();
 		createBlog();
-		getBlog(5);
+		getBlog(2);
 		listAllBlogs();
 
 	}
