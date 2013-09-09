@@ -1,11 +1,15 @@
 package se.vem.test;
 
+import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
 
 import se.vem.data.Blogs;
+import se.vem.data.Posts;
 import se.vem.data.User;
 import se.vem.databas.BlogsMapper;
+import se.vem.databas.PostsMapper;
 import se.vem.databas.UserMapper;
 
 public class Test {
@@ -17,9 +21,11 @@ public class Test {
 		
 		addUser();
 		createBlog();
+		createPost();
 		// getBlog(2);
 		listAllBlogs();
 		editUser();
+		
 	}
 	
 	private static void editUser() {
@@ -93,6 +99,14 @@ public class Test {
 			}
 	}
 	//Test for Posts
-	
+	private static void createPost(){
+		PostsMapper postsMapper = PostsMapper.getInstance();
+		Posts post = new Posts();
+		post.setTitle("Zlatan");
+		post.setText("Zlatan e bra.");
+		Date date = new Date();
+		post.setDate(new Timestamp(date.getTime()));
+		postsMapper.createPost(post);
+	}
 
 }
