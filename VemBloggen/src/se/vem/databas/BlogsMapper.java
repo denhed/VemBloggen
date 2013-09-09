@@ -47,7 +47,7 @@ public class BlogsMapper {
 	
 	/**
 	 * Hämtar en specifik blog med blog_id. (Blogs.class).
-	 * @return retunerar ett Blogs objekt.
+	 * @return retunerar ett Blogs objekt.k
 	 */
 	public Blogs getBlog(int id){
 		EntityManager em = connection.getEntityManager();
