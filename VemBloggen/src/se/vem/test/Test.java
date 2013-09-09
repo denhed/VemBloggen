@@ -1,6 +1,7 @@
 package se.vem.test;
 
 import java.util.List;
+import java.util.Scanner;
 
 import se.vem.data.Blogs;
 import se.vem.data.User;
@@ -8,15 +9,47 @@ import se.vem.databas.BlogsMapper;
 import se.vem.databas.UserMapper;
 
 public class Test {
+	
 
+	static Scanner scan = new Scanner(System.in);
+	
 	public static void main(String[] args) {
+		
 		addUser();
 		createBlog();
-		getBlog(2);
+		// getBlog(2);
 		listAllBlogs();
-
+		editUser();
 	}
-
+	
+	private static void editUser() {
+		UserMapper userMapper = UserMapper.getInstance();
+		System.out.println("--------------------------------");
+		List<User> users = userMapper.getAllUsers();
+		int i = 1;
+		for (User listUser : users){
+			System.out.print(i++ + " ");
+			System.out.println(listUser);
+		}
+		
+		long editProfileId;
+		
+		System.out.print("Välj vilken användare du vill redigera ");
+		editProfileId = scan.nextLong();
+		
+		String username;
+		System.out.print("Välj det nya användarnamnet: ");
+		username = scan.next();
+		
+		userMapper.editProfile(editProfileId, username);
+		
+		List<User> userChanged = userMapper.getAllUsers();
+		int j = 1;
+		for (User listUser : userChanged){
+			System.out.print(j++ + " ");
+			System.out.println(listUser);
+		}
+	}
 
 
 	private static void addUser() {
@@ -59,5 +92,7 @@ public class Test {
 				System.out.println(listBlogs.getTitle()); //Skriver ut titeln på bloggen.
 			}
 	}
+	//Test for Posts
+	
 
 }
