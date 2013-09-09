@@ -12,12 +12,17 @@ public class Test {
 	public static void main(String[] args) {
 		addUser();
 		createBlog();
-		getBlog(2);
+		getBlog(5);
 		listAllBlogs();
+		updateBlog();
 
 	}
 
-
+	private static void updateBlog(){
+		BlogsMapper blogMapper = BlogsMapper.getInstance();
+		String title = "de twoow";
+		blogMapper.editBlog(11, title);
+	}
 
 	private static void addUser() {
 		UserMapper userMapper = UserMapper.getInstance();
