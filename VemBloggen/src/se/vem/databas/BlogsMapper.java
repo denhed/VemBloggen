@@ -17,7 +17,7 @@ public class BlogsMapper {
 	private static Logger logg = null;
 	
 	private BlogsMapper() {
-		logg = Logger.getLogger("se.vemprojekt.databas");
+		logg = Logger.getLogger(BlogsMapper.class.getCanonicalName());
 		connection = DatabaseConnection.getInstance();
 		logg.info("Singeltobject created");
 	}
@@ -46,8 +46,8 @@ public class BlogsMapper {
 	} 
 	
 	/**
-	 * Redigerar ett Blogs objekt från Blogs-tabellen (Blogs.class).
-	 * @return retunerar det redigerade Blogs objektet.
+	 * Hämtar en specifik blog med blog_id. (Blogs.class).
+	 * @return retunerar ett Blogs objekt.
 	 */
 	public Blogs getBlog(int id){
 		EntityManager em = connection.getEntityManager();
@@ -70,6 +70,28 @@ public class BlogsMapper {
 		return blog;
 	} 
 	
+	/**
+	 * Tar emot ett blog objekt i parameterlistan och updaterar databasen(Blogs.class).
+	 * @return retunerar det Blogs objekt.
+	 */
+	public Blogs editBlog(Blogs blog){
+		EntityManager em = connection.getEntityManager();
+		
+		em.getTransaction().begin();
+		try {
+			
+			TypedQuery<Blogs> blogQuery = em.createQuery("UPDATE Blogs blogs SET blogs =:id  "
+					+ "WHERE blogs.blog_id=:blogsId", Blogs.class); 
+			blog  = blogQuery.getSingleResult(); // vi tar emot ett objekt.
+			em.getTransaction();
+		} finally {
+			if(em.getTransaction().isActive()) {
+				em.getTransaction().rollback();
+			}
+			em.close();
+		}
+		return blog;
+	}
 	
 	/**
 	 * Hämtar alla Blogs objekt från Blogs-tabellen (Blogs.class).
