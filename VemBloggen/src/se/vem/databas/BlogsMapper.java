@@ -8,6 +8,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 
 import se.vem.data.Blogs;
+import se.vem.data.Posts;
 
 
 public class BlogsMapper {
@@ -47,56 +48,99 @@ public class BlogsMapper {
 	
 	/**
 	 * Hämtar en specifik blog med blog_id. (Blogs.class).
-	 * @return retunerar ett Blogs objekt.
-	 * Vi testar igen =)
+	 * @return 
+	 * 1. retunerar ett blog objekt.
+	 * 2. hittades inget objekt retuneras null.
 	 */
-	public Blogs getBlog(int id){
+	public Blogs getBlog(long blog_id){
 		EntityManager em = connection.getEntityManager();
-		Blogs blog = null;
 		
-		em.getTransaction().begin();
+		Blogs tempBlog = em.find(Blogs.class, blog_id);//hitta rätt obj som ska raderas. Return null if not find.
 		
-		try {
+		if(tempBlog != null){
+		
+			em.getTransaction().begin();
 			
-			/*TypedQuery<Blogs> blogQuery = em.createQuery("SELECT blogs FROM Blogs blogs WHERE Blogs.blog_id = :blogId", Blogs.class); 
-			blogQuery.setParameter("blogId", id); //sätter parameter (namn på parametern i queryn, värdet som skickas in).
-			blog  = blogQuery.getSingleResult(); // vi tar emot ett objekt.
-			
-			*Ändrade till em.find()
-			*/
-			blog = em.find(Blogs.class, id);
-			em.getTransaction();
-		} finally {
-			if(em.getTransaction().isActive()) {
-				em.getTransaction().rollback();
+			try {
+				tempBlog = em.find(Blogs.class, blog_id);
+				em.getTransaction();
+			} finally {
+				if(em.getTransaction().isActive()) {
+					em.getTransaction().rollback();
+				}
+				em.close();
 			}
-			em.close();
+			return tempBlog;
+		}else {
+			return null;// om vi inte hittar ett obj retunera null.
 		}
-		return blog;
 	} 
 	
 	/**
-	 * Tar emot ett blog objekt i parameterlistan och updaterar databasen(Blogs.class).
-	 * @return retunerar det Blogs objekt.
+	 * Tar emot ett blog_id och det värden som ska ändras i databasen(Blogs.class).
+	 * @return 
+	 * 1. retunerar det uppdaterade objekt.
+	 * 2. hittades inget objekt retuneras null.
 	 */
 	public  Blogs editBlog(long blog_id, String title){
 		EntityManager em = connection.getEntityManager();
-
-				
-		Blogs tempBlog = em.find(Blogs.class, blog_id);
-		try {
-			em.getTransaction().begin();
-			tempBlog.setTitle(title);
-			em.getTransaction().commit();
-			
-					
-		} finally {
-			if(em.getTransaction().isActive()) {
-				em.getTransaction().rollback();
+	
+		Blogs tempBlog = em.find(Blogs.class, blog_id);//hitta rätt obj som ska raderas. Return null if not find.
+		
+		if(tempBlog != null){
+			try {
+				em.getTransaction().begin();
+				tempBlog.setTitle(title);  //Uppdaterar titeln.
+				em.getTransaction().commit();
+									
+			} finally {
+				if(em.getTransaction().isActive()) {
+					em.getTransaction().rollback();
+				}
+				em.close();
 			}
-			em.close();
+			return tempBlog;
+		}else {
+			return null;// om vi inte hittar ett obj retunera null.
 		}
-		return tempBlog;
+		
+		
+	}
+	
+	/**
+	 * Hämtar ett Blogs objekt från Blogs-tabellen (Blogs.class) med 
+	 * blog_id och därefter raderas objektet.
+	 * @return 
+	 * Värden som retuneras:
+	 * 1. objekt raderas, 1 retuneras.
+	 * 2. inget raderades, 2 retuneras.
+	 * 3. hittade inget objekt, 3 retuneras.
+	 */
+	public int removeBlog(long blog_id){
+		
+		EntityManager em = connection.getEntityManager();
+		
+		int status = 0;
+		Blogs tempBlog = em.find(Blogs.class, blog_id);//hitta rätt obj som ska raderas. Return null if not find.
+		
+		if(tempBlog != null){
+			try {
+				em.getTransaction().begin();
+				em.remove(tempBlog);  //Raderar objektet.
+				em.getTransaction().commit();
+				status = 1; //objekt raderat
+			} finally {
+				if(em.getTransaction().isActive()) {
+					em.getTransaction().rollback();
+					status = 2; // något gick fel.
+				}
+				em.close();
+			}
+		}else{
+			status = 3; //hittade inget objekt.
+		}
+		
+		return status;
 	}
 	
 	/**
@@ -129,13 +173,7 @@ public class BlogsMapper {
 	
 	
 /*
-	
-	
-	public Blogs removeBlog(Blogs blogID){
-		return blog;
-	} 
-	
-	
+
 	public List<Posts> listPosts(Blogs blogName){
 		return blog;
 	} 
