@@ -12,9 +12,11 @@ import se.vem.databas.UserMapper;
 public class Test {
 
 	public static void main(String[] args) {
-		//addUser();
-		//createBlog();
 		getBlog(73);
+		addUser();
+		createBlog();
+		createPost();
+		getBlog(5);
 		listAllBlogs();
 		//updateBlog();
 		//removeBlogs();
@@ -102,6 +104,16 @@ public class Test {
 				System.out.print(listBlogs.getBlog_id() + " "); //skriver ut blog_id.
 				System.out.println(listBlogs.getTitle()); //Skriver ut titeln på bloggen.
 			}
+	}
+	//Test for Posts
+	private static void createPost(){
+		PostsMapper postsMapper = PostsMapper.getInstance();
+		Posts post = new Posts();
+		post.setTitle("Zlatan");
+		post.setText("Zlatan e bra.");
+		Date date = new Date();
+		post.setDate(new Timestamp(date.getTime()));
+		postsMapper.createPost(post);
 	}
 
 }
