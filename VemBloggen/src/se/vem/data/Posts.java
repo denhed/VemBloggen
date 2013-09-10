@@ -20,8 +20,9 @@ public class Posts implements Serializable {
 	private String text;
 	private Timestamp date;
 	private long comments_id;
-	
+	private long blogs_id;
 	private static final long serialVersionUID = 1L;
+	
 
 	public Posts() {
 		super();
@@ -60,6 +61,14 @@ public class Posts implements Serializable {
 
 	public void setComments_id(long comments_id) {
 		this.comments_id = comments_id;
+	}
+	
+	public long getBlogs_id() {
+		return this.blogs_id;
+	}
+
+	public void setBlogs_id(long blogs_id) {
+		this.blogs_id = blogs_id;
 	}
    
 }
