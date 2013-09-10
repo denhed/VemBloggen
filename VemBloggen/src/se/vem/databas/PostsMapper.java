@@ -76,6 +76,30 @@ public class PostsMapper {
 			allPosts = new ArrayList<Posts>();
 		return allPosts;
 	}
+	/**
+	 * Hämtar alla posts objekt med visst blog_id.
+	 * @return retunerar alla posts objekt.
+	 */
+	public List<Posts> getPostsWithBlogID(long blog_id){
+		
+		EntityManager em = connection.getEntityManager();
+		List<Posts> allPosts = new ArrayList<Posts>();
+		
+		em.getTransaction().begin();
+		
+		try {
+			TypedQuery<Posts> posts = em.createQuery("Select posts FROM Posts posts WHERE Posts.comments_id =:blogs_id", Posts.class); 
+			posts.setParameter("blogs_id", blog_id);
+			allPosts = posts.getResultList();
+			em.getTransaction();
+		} finally {
+			if(em.getTransaction().isActive()) {
+				em.getTransaction().rollback();
+			}
+			em.close();
+		}
+		return allPosts;
+	}
 
 }
 	
