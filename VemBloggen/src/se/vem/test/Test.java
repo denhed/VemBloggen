@@ -1,5 +1,7 @@
 package se.vem.test;
 
+import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
 
 import se.vem.data.Blogs;
@@ -22,6 +24,7 @@ public class Test {
 		//removeBlogs();
 		addPost("andra posten"," detta var en blog.");
 
+		
 	}
 	
 
