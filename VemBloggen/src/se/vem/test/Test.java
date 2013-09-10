@@ -3,6 +3,7 @@ package se.vem.test;
 import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
+import java.util.Scanner;
 
 import se.vem.data.Blogs;
 import se.vem.data.Posts;
@@ -14,17 +15,39 @@ import se.vem.databas.UserMapper;
 public class Test {
 
 	public static void main(String[] args) {
-		getBlog(73);
-		addUser();
-		createBlog();
-		createPost();
-		getBlog(5);
-		listAllBlogs();
+		// getBlog(73);
+		// addUser();
+		// createBlog();
+		// createPost();
+		// getBlog(5);
+		// listAllBlogs();
 		//updateBlog();
 		//removeBlogs();
-		addPost("andra posten"," detta var en blog.");
-
+		// addPost("andra posten"," detta var en blog.");
+		removeProfile();
 		
+	}
+	
+	private static void removeProfile() {
+		Scanner scan = new Scanner(System.in);
+		
+		UserMapper userMapper = UserMapper.getInstance();
+		List<User> users = userMapper.getAllUsers();
+		int i = 1;
+		for (User listUser : users){
+			System.out.print(i++ + " ");
+			System.out.println(listUser);
+		}
+		System.out.print("Välj vilken profil du vill ta bort: ");
+		long removing = scan.nextLong();
+		userMapper.removeProfile(removing);
+		
+		List<User> usersRemaining = userMapper.getAllUsers();
+		int j = 1;
+		for (User userList : usersRemaining){
+			System.out.print(j++ + " ");
+			System.out.println(userList);
+		}
 	}
 	
 

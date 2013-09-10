@@ -45,6 +45,28 @@ public class UserMapper {
 
 	}
 
+	public User removeProfile(long user_id) {
+		EntityManager em = connection.getEntityManager();
+		
+		User removeProfile = em.find(User.class, user_id);
+		
+		try {
+			em.getTransaction().begin();
+			
+			em.remove(removeProfile);
+			
+			em.getTransaction().commit();
+		} finally {
+			if(em.getTransaction().isActive()) {
+				em.getTransaction().rollback();
+			}
+			em.close();
+		}
+		
+		return removeProfile;
+		
+	}
+
 	public User editProfile(long user_id, String username) {
 		EntityManager em = connection.getEntityManager();
 		em.getTransaction().begin();
