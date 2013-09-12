@@ -8,11 +8,12 @@ import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 
 import se.vem.data.Comments;
+import se.vem.data.Posts;
 
 public class CommentsMapper {
 	private static CommentsMapper commentsMapper = new CommentsMapper();
 
-	private static DatabaseConnection connection = null;
+	private DatabaseConnection connection = null;
 
 	private static Logger logg = null;
 
@@ -28,19 +29,17 @@ public class CommentsMapper {
 	
 	public Comments addComment(Comments comments) {
 		EntityManager em = connection.getEntityManager();
-		try {
+		try{
 			em.getTransaction().begin();
 			em.persist(comments);
 			em.getTransaction().commit();
-		} finally {
-			if (em.getTransaction().isActive()) {
+		}finally{
+			if(em.getTransaction().isActive()){
 				em.getTransaction().rollback();
 			}
+			em.close();
 		}
-		em.close();
-
 		return comments;
-
 	}
 	
 	
@@ -51,10 +50,10 @@ public class CommentsMapper {
 		em.getTransaction().begin();
 
 		try {
-			TypedQuery<Comments> c = em.createQuery("SELECT user FROM User user",
+			TypedQuery<Comments> c = em.createQuery("SELECT comments FROM Comments comments",
 					Comments.class);
 			listComment = c.getResultList();
-			em.getTransaction();
+			em.getTransaction().commit();
 		} finally {
 			if (em.getTransaction().isActive()) {
 				em.getTransaction().rollback();
@@ -63,6 +62,23 @@ public class CommentsMapper {
 		}
 
 		return listComment;
+	}
+	public Comments removeComment(long comments_id){
+		EntityManager em = connection.getEntityManager();
+		Comments removeComment;
+		
+		try{
+			em.getTransaction().begin();
+			removeComment = em.find(Comments.class,comments_id);
+			em.remove(removeComment);
+			em.getTransaction().commit();
+		}finally{
+			if(em.getTransaction().isActive()){
+				em.getTransaction().rollback();
+			}
+			em.close();
+		}
+		return removeComment;
 	}
 
 }

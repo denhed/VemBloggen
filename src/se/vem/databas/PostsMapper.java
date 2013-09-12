@@ -46,7 +46,7 @@ public class PostsMapper {
 		try{
 			em.getTransaction().begin();
 			removePost = em.find(Posts.class,posts_id);
-			em.remove(posts_id);
+			em.remove(removePost);
 			em.getTransaction().commit();
 		}finally{
 			if(em.getTransaction().isActive()){

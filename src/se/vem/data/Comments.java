@@ -52,5 +52,10 @@ public class Comments implements Serializable {
 	public void setNotice(String notice) {
 		this.notice = notice;
 	}
+	@Override
+	public String toString() {
+		return "Comments [comments_id= " + comments_id + ", poster= " + poster
+				+ ", text= " + text + "]";
+	}
    
 }
