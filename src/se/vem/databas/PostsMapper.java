@@ -76,6 +76,28 @@ public class PostsMapper {
 			allPosts = new ArrayList<Posts>();
 		return allPosts;
 	}
+	
+
+	public Posts editPost(long posts_id, String title,
+			String text){
+		EntityManager em = connection.getEntityManager();
+		em.getTransaction().begin();
+		Posts editPost;
+		
+		try{
+			editPost = em.find(Posts.class, posts_id);
+			editPost.setTitle(title);
+			editPost.setText(text);
+			em.getTransaction().commit();
+		}finally{
+			if(em.getTransaction().isActive()){
+				em.getTransaction().rollback();
+			}
+			em.close();
+		}
+		return editPost;
+	}
+	
 	/**
 	 * Hämtar alla posts objekt med visst blog_id.
 	 * @return retunerar alla posts objekt.

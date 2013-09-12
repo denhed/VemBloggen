@@ -70,5 +70,12 @@ public class Posts implements Serializable {
 	public void setBlogs_id(long blogs_id) {
 		this.blogs_id = blogs_id;
 	}
+	@Override
+	public String toString() {
+		return "Posts [posts_id = " + posts_id + ", title = " + title + ", text = "
+				+ text + "]";
+	}
+	
+	
    
 }
