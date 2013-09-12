@@ -34,9 +34,9 @@ public class PostsMapper {
 			if(em.getTransaction().isActive()){
 				em.getTransaction().rollback();
 			}
-				
+			em.close();	
 		}
-		em.close();
+		
 		return post;
 	}
 	public Posts removePost(long posts_id){
